@@ -1,0 +1,44 @@
+﻿@model C__BookStore.Models.Purchase
+
+@*@{
+    Model.user_id = Request.QueryString["uid"];
+    Model.product_id = int.Parse(Request.QueryString["pid"]);
+    Model.product_name = Request.QueryString["p_name"];
+    Model.total_price = float.Parse(Request.QueryString["price"]);
+}*@
+
+
+<div>
+    <div style="border:2px solid black; border-radius: 5px; align-items:center">
+
+        @using (Html.BeginForm("Checkout", "Purchase", FormMethod.Post))
+        {
+            <b>Product Name: </b> @Request.QueryString["p_name"]
+            @Html.HiddenFor(model => model.product_name)
+
+            <br />
+
+            <b>Product Price: </b> @Request.QueryString["price"]
+            @Html.HiddenFor(model => model.total_price)
+            <br />
+
+            @Html.HiddenFor(model => model.user_id)
+            @Html.HiddenFor(model => model.product_id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Checkout" class="btn btn-default" />
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

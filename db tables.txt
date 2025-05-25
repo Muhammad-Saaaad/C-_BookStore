@@ -1,0 +1,4 @@
+Tables:
+1. Accounts (user_id, email, password, user_type)
+2. products (user_id, product_id, product_name, product_quantity, price, picture)
+3. Purchase (user_id, product_id, product_name, product_quantity, total_price, date)

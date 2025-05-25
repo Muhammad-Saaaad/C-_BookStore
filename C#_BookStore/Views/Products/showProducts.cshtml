@@ -1,30 +1,30 @@
 ﻿@model IEnumerable<C__BookStore.Models.Products>
 
-
-<h2>showProducts</h2>
+<h2 style="text-align:center">Show Products</h2>
 
 @if (Model != null && Model.Any())
 {
-    <div class="row">
+    <div class="row" style="display: flex;">
         @foreach (var item in Model)
         {
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4" style="justify-content: start; border: 3px solid black; border-radius: 5px; margin:4px;">
                 <div class="card h-100">
 
                     <img src="@item.img_path" class="card-img-top img-fluid" alt="Album Image" style="max-height: 200px; object-fit: contain; width:100%">
 
                     <div class="card-body">
-                        <h5 class="card-title">@item.product_name</h5>
+                        <h4 class="card-title">@item.product_name</h4>
                         <p class="card-text">
                             <strong>Price:</strong> @item.price
+                            <br />
                             <strong>Total remaining:</strong> @item.quantity
                         </p>
-                    </div>
+                    </div >
                     <a href="/Products/buy?uid=@Session["uid"]&&pid=@item.product_id&&quantity=@item.quantity" 
-                       style="text-decoration: none; color: black; border: 1px solid black; border-radius: 5px;">
-                    Buy
+                        style="text-decoration: none; padding:5px; color: black; border: 1px solid black; border-radius: 5px;">Buy
                     </a>
                 </div>
+                <br />
             </div>
         }
     </div>

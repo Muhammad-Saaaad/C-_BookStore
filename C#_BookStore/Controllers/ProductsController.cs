@@ -48,7 +48,7 @@ namespace C__BookStore.Controllers
             db.InsertUpdateDelete(query);
             db.CloseConnection();
 
-            Console.WriteLine(prod.img_path);
+            prod.img_path = "~/Images/" + serverpath;
 
             return View(prod);
         }

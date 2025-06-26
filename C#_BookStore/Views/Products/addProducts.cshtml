@@ -4,8 +4,12 @@
     ViewBag.Title = "addProducts";
 }
 
+<div style="text-align:right">
+    @Html.ActionLink("logout", "Login", "Accounts")
+</div>
+
 <center>
-    <h4>User Id : @Session["uid"]</h4>
+    <h4 style="color:darkgreen">User Id : @Session["uid"]</h4>
 
     <h3 style="color:orange">Add Products</h3>
 
@@ -72,7 +76,9 @@
 @if (IsPost)
 {
     <strong style="color:darkgreen">Product Inserted Sucessfully</strong>
-    <img src=@Model.img_path height="200" width="200" />
+    @*<div>
+        <img src="@Model.img_path" class="card-img-top img-fluid" alt="Album Image" style="max-height: 200px; object-fit: contain; width:100%" />
+    </div>*@
 
 }
 

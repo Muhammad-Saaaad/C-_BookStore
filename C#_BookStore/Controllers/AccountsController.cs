@@ -55,6 +55,16 @@ namespace C__BookStore.Controllers
         [HttpPost]
         public ActionResult Login(Accounts acc)
         {
+            Session.Clear();
+
+            // Clear cookies if they exist
+            if (Request.Cookies["user_id"] != null)
+            {
+                HttpCookie cookies_obj = new HttpCookie("user_id");
+                cookies_obj.Expires = DateTime.Now.AddDays(-1); // Set cookie expiration to a past date to delete it
+                Response.Cookies.Add(cookies_obj);
+            }
+
             String query = $"select * from Accounts where user_id='{acc.user_id}' and password='{acc.password}'";
             db.OpenConnection();
             SqlDataReader sdr = db.GetData(query);
@@ -62,6 +72,11 @@ namespace C__BookStore.Controllers
             if (sdr.Read())
             {
                 Session["uid"] = sdr["user_id"].ToString();
+
+                HttpCookie cookies_obj = new HttpCookie("user_id");
+                cookies_obj["id"] = sdr["user_id"].ToString();
+                cookies_obj.Expires = DateTime.Now.AddMinutes(30); // Set cookie expiration to 30 minutes
+                Response.Cookies.Add(cookies_obj);
 
                 if (sdr["user_type"].ToString() == "buyer")
                 {

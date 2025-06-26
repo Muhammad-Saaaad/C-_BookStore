@@ -1,32 +1,49 @@
 ﻿@model IEnumerable<C__BookStore.Models.Products>
 
-<h2 style="text-align:center">Show Products</h2>
+
+@{
+    HttpCookie cookie = Request.Cookies["user_id"];
+}
+@if (cookie != null)
+{
+    <h4 style="color:darkgreen; text-align:center;">@cookie["id"]</h4>
+}
+
+<h3 style="text-align:center; color:orange;">Show Products</h3>
+
+<div style="text-align:right; color:black">
+    @Html.ActionLink("logout", "Login", "Accounts")
+</div>
+
 
 @if (Model != null && Model.Any())
 {
     <div class="row" style="display: flex;">
         @foreach (var item in Model)
         {
-            <div class="col-md-4 mb-4" style="justify-content: start; border: 3px solid black; border-radius: 5px; margin:4px;">
-                <div class="card h-100">
+            if (item.quantity > 0)
+            {
+                <div class="col-md-4 mb-4" style="justify-content: start; border: 3px solid black; border-radius: 5px; margin:4px;">
+                    <div class="card h-100">
 
-                    <img src="@item.img_path" class="card-img-top img-fluid" alt="Album Image" style="max-height: 200px; object-fit: contain; width:100%">
+                        <img src="@item.img_path" class="card-img-top img-fluid" alt="Album Image" style="max-height: 200px; object-fit: contain; width:100%">
 
-                    <div class="card-body">
-                        <h4 class="card-title">@item.product_name</h4>
-                        <p class="card-text">
-                            <strong>Price:</strong> @item.price
-                            <br />
-                            <strong>Total remaining:</strong> @item.quantity
-                        </p>
+                        <div class="card-body">
+                            <h4 class="card-title">@item.product_name</h4>
+                            <p class="card-text">
+                                <strong>Price:</strong> @item.price
+                                <br />
+                                <strong>Total remaining:</strong> @item.quantity
+                            </p>
+                        </div>
+                        <a href="/Purchase/buyProducts?uid=@Session["uid"]&&pid=@item.product_id&&p_name=@item.product_name&&price=@item.price&&quantity=@item.quantity"
+                           style="text-decoration: none; padding:5px; color: black; border: 1px solid black; border-radius: 5px;">
+                            Buy
+                        </a>
                     </div>
-                    <a href="/Purchase/buyProducts?uid=@Session["uid"]&&pid=@item.product_id&&p_name=@item.product_name&&price=@item.price&&quantity=@item.quantity"
-                       style="text-decoration: none; padding:5px; color: black; border: 1px solid black; border-radius: 5px;">
-                        Buy
-                    </a>
+                    <br />
                 </div>
-                <br />
-            </div>
+            }
         }
     </div>
 }
